@@ -14,12 +14,11 @@ RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5
 # user
 ARG PUID=1000
 ARG PGID=1000 
-ARG PASSWORD="password"
 
 RUN groupadd -g ${PGID} docker-user && \
     useradd -u ${PUID} -g docker-user -m docker-user  && \
-    usermod -p ${PASSWORD} docker-user -s /usr/bin/fish && \
-    echo "docker-user     ALL=(ALL)       ALL" >> /etc/sudoers
+    usermod docker-user -s /usr/bin/fish && \
+    echo "docker-user     ALL=(ALL)        NOPASSWD: ALL" >> /etc/sudoers
 USER docker-user
 
 # dot files
