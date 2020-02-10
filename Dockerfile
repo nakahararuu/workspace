@@ -4,9 +4,7 @@ FROM ubuntu
 RUN apt update && \
     apt-get install -y \ 
         sudo build-essential curl wget file apt-utils git \
-        tmux parallel gawk openjdk-8-jdk
-RUN apt-get install -y vim && curl -sLf https://spacevim.org/install.sh | bash
-RUN apt-get install -y fish && curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+        tmux vim fish parallel gawk openjdk-8-jdk
 RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5.5-852_linux_amd64.deb && \
     apt-get install ./chezmoi_1.5.5-852_linux_amd64.deb && \
     rm chezmoi_1.5.5-852_linux_amd64.deb
@@ -20,6 +18,10 @@ RUN groupadd -g ${PGID} docker-user && \
     usermod docker-user -s /usr/bin/fish && \
     echo "docker-user     ALL=(ALL)        NOPASSWD: ALL" >> /etc/sudoers
 USER docker-user
+
+# space vim & fisher
+RUN  curl -sLf https://spacevim.org/install.sh | bash && \
+     curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 # dot files
 RUN mkdir -p ~/.config/chezmoi && \
