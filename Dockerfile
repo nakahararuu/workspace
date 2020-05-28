@@ -4,7 +4,7 @@ FROM ubuntu
 RUN apt update && \
     apt-get install -y \ 
         sudo build-essential curl wget file apt-utils git \
-        tmux vim fish parallel gawk openjdk-8-jdk
+        tmux vim fish parallel gawk openjdk-11-jdk
 RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5.5-852_linux_amd64.deb && \
     apt-get install ./chezmoi_1.5.5-852_linux_amd64.deb && \
     rm chezmoi_1.5.5-852_linux_amd64.deb
