@@ -3,8 +3,11 @@ FROM ubuntu
 # packages
 RUN apt update && \
     apt-get install -y \ 
-        sudo build-essential curl wget file apt-utils git \
-        tmux vim fish parallel gawk openjdk-11-jdk
+        sudo build-essential curl wget file git tmux vim parallel gawk \
+        openjdk-11-jdk apt-utils software-properties-common
+RUN apt-add-repository ppa:fish-shell/release-3 && \
+    apt update && \
+    apt-get install -y fish
 RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5.5-852_linux_amd64.deb && \
     apt-get install ./chezmoi_1.5.5-852_linux_amd64.deb && \
     rm chezmoi_1.5.5-852_linux_amd64.deb
