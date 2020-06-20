@@ -16,7 +16,6 @@ RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5
 # user
 ARG PUID=1000
 ARG PGID=1000 
-
 RUN groupadd -g ${PGID} docker-user && \
     useradd -u ${PUID} -g docker-user -m docker-user  && \
     usermod docker-user -s /usr/bin/fish && \
@@ -28,13 +27,7 @@ RUN  curl -sLf https://spacevim.org/install.sh | bash && \
      curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 # dot files
-RUN mkdir -p ~/.config/chezmoi && \
-    echo '\
-[data]\n\
-    [data.git]\n\
-        email = "docker-user@example.com"\n\
-	      user= "docker-user"\
-' > ~/.config/chezmoi/chezmoi.toml
+COPY default_chezmoi.toml /home/docker-user/.config/chezmoi/chezmoi.toml
 RUN chezmoi init --apply --verbose https://github.com/nakahararuu/dotfiles.git
 
 # tmux plugins
@@ -49,5 +42,6 @@ RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
 # lang
 ENV LANG=ja_JP.UTF8
 
+COPY start.sh /tmp/
 WORKDIR /workspace
-ENTRYPOINT ["tmux"]
+ENTRYPOINT ["bash", "/tmp/start.sh"]

@@ -1,0 +1,4 @@
+[data]
+    [data.git]
+        email = "git-docker-user@example.com"
+        user = "git-docker-user"
