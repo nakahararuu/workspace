@@ -4,7 +4,7 @@ FROM ubuntu
 RUN apt update && \
     apt-get install -y \ 
         sudo build-essential curl wget file git tmux vim parallel gawk \
-        openjdk-11-jdk apt-utils software-properties-common
+        openjdk-11-jdk apt-utils software-properties-common language-pack-ja
 RUN apt-add-repository ppa:fish-shell/release-3 && \
     apt-add-repository ppa:greymd/tmux-xpanes && \
     apt update && \
@@ -45,6 +45,9 @@ RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     sleep 1 && \
     ~/.tmux/plugins/tpm/scripts/install_plugins.sh && \
     tmux kill-server
+
+# lang
+ENV LANG=ja_JP.UTF8
 
 WORKDIR /workspace
 ENTRYPOINT ["tmux"]
