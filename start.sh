@@ -12,6 +12,6 @@ fi
 chezmoi apply
 
 # start shell
-fish -l
+tmux
 
 exit 0
