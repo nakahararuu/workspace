@@ -1,6 +1,7 @@
 FROM ubuntu:20.04
 
 # packages
+ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
     apt-get install -y \ 
         sudo build-essential curl wget file git tmux vim parallel gawk \
