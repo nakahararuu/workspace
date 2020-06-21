@@ -29,7 +29,7 @@ RUN  curl -sLf https://spacevim.org/install.sh | bash && \
      curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 # dot files
-COPY default_chezmoi.toml /home/docker-user/.config/chezmoi/chezmoi.toml
+COPY chezmoi.toml /home/docker-user/.config/chezmoi/chezmoi.toml
 RUN chezmoi init --apply --verbose https://github.com/nakahararuu/dotfiles.git
 
 # tmux plugins
@@ -44,6 +44,5 @@ RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
 # lang
 ENV LANG=ja_JP.UTF8
 
-COPY start.sh /tmp/
 WORKDIR /workspace
-ENTRYPOINT ["bash", "/tmp/start.sh"]
+ENTRYPOINT ["tmux"]
