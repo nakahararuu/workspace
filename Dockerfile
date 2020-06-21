@@ -20,7 +20,8 @@ ARG PGID=1000
 RUN groupadd -g ${PGID} docker-user && \
     useradd -u ${PUID} -g docker-user -m docker-user  && \
     usermod docker-user -s /usr/bin/fish && \
-    echo "docker-user     ALL=(ALL)        NOPASSWD: ALL" >> /etc/sudoers
+    echo "docker-user     ALL=(ALL)        NOPASSWD: ALL" >> /etc/sudoers && \
+    echo "Set disable_coredump false" >> /etc/sudo.conf
 USER docker-user
 
 # space vim & fisher
