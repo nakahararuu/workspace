@@ -1,27 +1,26 @@
 FROM ubuntu:20.04
 
-# packages
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt update && \
-    apt-get install -y \ 
-        sudo build-essential curl wget file git tmux vim parallel gawk \
-        openjdk-11-jdk apt-utils software-properties-common language-pack-ja
-RUN apt-add-repository ppa:fish-shell/release-3 && \
-    apt-add-repository ppa:greymd/tmux-xpanes && \
-    apt update && \
-    apt-get install -y fish tmux-xpanes
-RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5.5-852_linux_amd64.deb && \
-    apt-get install ./chezmoi_1.5.5-852_linux_amd64.deb && \
-    rm chezmoi_1.5.5-852_linux_amd64.deb
-
-# user
+# create docker-user
 ARG PUID=1000
 ARG PGID=1000 
 RUN groupadd -g ${PGID} docker-user && \
-    useradd -u ${PUID} -g docker-user -m docker-user  && \
-    usermod docker-user -s /usr/bin/fish && \
-    echo "docker-user     ALL=(ALL)        NOPASSWD: ALL" >> /etc/sudoers
+    useradd -u ${PUID} -g docker-user -m docker-user 
+
+# packages for all users
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update && \
+    apt-get install -y \ 
+        build-essential curl file git sudo \
+        language-pack-ja language-pack-en \
+        software-properties-common apt-utils 
+
+# packages for docker-user 
 USER docker-user
+RUN git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew && \
+    mkdir ~/.linuxbrew/bin && \
+    ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin && \
+    eval $(~/.linuxbrew/bin/brew shellenv) && \
+    brew install tmux vim parallel gawk wget openjdk@11 fish tmux-xpanes chezmoi
 
 # space vim & fisher
 RUN  curl -sLf https://spacevim.org/install.sh | bash && \
@@ -45,4 +44,4 @@ ENV LANG=ja_JP.UTF8
 
 COPY start.sh /tmp/
 WORKDIR /workspace
-ENTRYPOINT ["bash", "/tmp/start.sh"]
+ENTRYPOINT ["fish"]
