@@ -13,6 +13,10 @@ RUN apt-add-repository ppa:fish-shell/release-3 && \
 RUN wget https://github.com/twpayne/chezmoi/releases/download/v1.5.5/chezmoi_1.5.5-852_linux_amd64.deb && \
     apt-get install ./chezmoi_1.5.5-852_linux_amd64.deb && \
     rm chezmoi_1.5.5-852_linux_amd64.deb
+RUN mkdir /tmp/ghq && \
+    cd /tmp/ghq && \
+    git clone https://github.com/x-motemen/ghq . && \
+    make install
 
 # user
 ARG PUID=1000
@@ -39,6 +43,9 @@ RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && \
     sleep 1 && \
     ~/.tmux/plugins/tpm/scripts/install_plugins.sh && \
     tmux kill-server
+
+# fish plugins
+RUN fisher add decors/fish-ghq
 
 # lang
 ENV LANG=ja_JP.UTF8
