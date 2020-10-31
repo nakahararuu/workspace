@@ -29,7 +29,6 @@ RUN  curl -sLf https://spacevim.org/install.sh | bash && \
      curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 
 # dot files
-COPY chezmoi.toml /home/docker-user/.config/chezmoi/chezmoi.toml
 RUN chezmoi init --apply --verbose https://github.com/nakahararuu/dotfiles.git
 
 # tmux plugins
