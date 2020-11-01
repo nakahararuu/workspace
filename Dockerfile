@@ -4,7 +4,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && \
     apt-get install -y \ 
-        sudo build-essential curl wget file git tmux vim parallel gawk \
+        sudo build-essential curl wget file git tmux vim parallel gawk fzf \
         openjdk-11-jdk apt-utils software-properties-common language-pack-ja language-pack-en
 RUN apt-add-repository ppa:fish-shell/release-3 && \
     apt-add-repository ppa:greymd/tmux-xpanes && \
