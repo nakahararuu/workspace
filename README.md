@@ -1,3 +1,5 @@
+*this repository isn't maintenance. dotfiles is no longer supports linux.*
+
 # workspace
 my workspace built on Docker container. see also nakahararuu/dotfiles
 
